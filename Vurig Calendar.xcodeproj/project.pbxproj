@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		147C866318601CED007E0960 /* Default-568h@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 147C866218601CED007E0960 /* Default-568h@2x.png */; };
+		147C866518601D6C007E0960 /* Screenshot 2013.12.17 13.48.51.png in Resources */ = {isa = PBXBuildFile; fileRef = 147C866418601D6C007E0960 /* Screenshot 2013.12.17 13.48.51.png */; };
 		93597E58157523D0004AE766 /* NSDate+convenience.m in Sources */ = {isa = PBXBuildFile; fileRef = 93597E57157523D0004AE766 /* NSDate+convenience.m */; };
 		93597E5C157523EF004AE766 /* NSMutableArray+convenience.m in Sources */ = {isa = PBXBuildFile; fileRef = 93597E5B157523EF004AE766 /* NSMutableArray+convenience.m */; };
 		93597E5F15752414004AE766 /* UIView+convenience.m in Sources */ = {isa = PBXBuildFile; fileRef = 93597E5E15752414004AE766 /* UIView+convenience.m */; };
@@ -23,6 +25,8 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		147C866218601CED007E0960 /* Default-568h@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default-568h@2x.png"; sourceTree = "<group>"; };
+		147C866418601D6C007E0960 /* Screenshot 2013.12.17 13.48.51.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Screenshot 2013.12.17 13.48.51.png"; sourceTree = "<group>"; };
 		93597E56157523D0004AE766 /* NSDate+convenience.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSDate+convenience.h"; sourceTree = "<group>"; };
 		93597E57157523D0004AE766 /* NSDate+convenience.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSDate+convenience.m"; sourceTree = "<group>"; };
 		93597E5A157523EF004AE766 /* NSMutableArray+convenience.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSMutableArray+convenience.h"; sourceTree = "<group>"; };
@@ -65,6 +69,8 @@
 		93664AD5157522BF004EBE25 = {
 			isa = PBXGroup;
 			children = (
+				147C866418601D6C007E0960 /* Screenshot 2013.12.17 13.48.51.png */,
+				147C866218601CED007E0960 /* Default-568h@2x.png */,
 				93664AEA157522C0004EBE25 /* Vurig Calendar */,
 				93664AE3157522BF004EBE25 /* Frameworks */,
 				93664AE1157522BF004EBE25 /* Products */,
@@ -185,6 +191,8 @@
 			files = (
 				93664AEF157522C0004EBE25 /* InfoPlist.strings in Resources */,
 				93664AFB157522C0004EBE25 /* VRGViewController.xib in Resources */,
+				147C866518601D6C007E0960 /* Screenshot 2013.12.17 13.48.51.png in Resources */,
+				147C866318601CED007E0960 /* Default-568h@2x.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -274,6 +282,7 @@
 		93664AFF157522C0004EBE25 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CLANG_ENABLE_OBJC_ARC = YES;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "Vurig Calendar/Vurig Calendar-Prefix.pch";
 				INFOPLIST_FILE = "Vurig Calendar/Vurig Calendar-Info.plist";
@@ -285,6 +294,7 @@
 		93664B00157522C0004EBE25 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CLANG_ENABLE_OBJC_ARC = YES;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "Vurig Calendar/Vurig Calendar-Prefix.pch";
 				INFOPLIST_FILE = "Vurig Calendar/Vurig Calendar-Info.plist";
