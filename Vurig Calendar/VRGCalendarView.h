@@ -18,7 +18,7 @@
 
 @protocol VRGCalendarViewDelegate;
 @interface VRGCalendarView : UIView {
-    id <VRGCalendarViewDelegate> delegate;
+    __weak id <VRGCalendarViewDelegate> delegate;
     
     NSDate *currentMonth;
     
@@ -35,7 +35,7 @@
     NSArray *markedColors;
 }
 
-@property (nonatomic, retain) id <VRGCalendarViewDelegate> delegate;
+@property (nonatomic, weak) id <VRGCalendarViewDelegate> delegate;
 @property (nonatomic, retain) NSDate *currentMonth;
 @property (nonatomic, retain) UILabel *labelCurrentMonth;
 @property (nonatomic, retain) UIImageView *animationView_A;
