@@ -48,12 +48,14 @@
 -(void)markDates:(NSArray *)dates {
     self.markedDates = dates;
     NSMutableArray *colors = [[NSMutableArray alloc] init];
-    
+    //TODO:标记日期的颜色
     for (int i = 0; i<[dates count]; i++) {
-        [colors addObject:[UIColor colorWithHexString:@"0x383838"]];
+//        [colors addObject:[UIColor colorWithHexString:@"0x383838"]];
+        [colors addObject:[UIColor blueColor]];
     }
     
     self.markedColors = [NSArray arrayWithArray:colors];
+    [colors release];
     
     [self setNeedsDisplay];
 }
@@ -74,11 +76,14 @@
     [gregorian components:(NSYearCalendarUnit | NSMonthCalendarUnit |
                            NSDayCalendarUnit) fromDate: [NSDate date]];
     self.currentMonth = [gregorian dateFromComponents:components]; //clean month
-    
     [self updateSize];
     [self setNeedsDisplay];
-    [delegate calendarView:self switchedToMonth:[currentMonth month] targetHeight:self.calendarHeight animated:NO];
+//    [delegate calendarView:self switchedToMonth:[currentMonth month] targetHeight:self.calendarHeight animated:NO];
+
+    //TODO:自己修改的方法
+    [delegate calendarView:self switchedToMonth:[currentMonth month] withYear:[currentMonth year] targetHeight:self.calendarHeight animated:NO];
 }
+
 
 #pragma mark - Next & Previous
 -(void)showNextMonth {
@@ -99,7 +104,9 @@
     
     //New month
     self.currentMonth = [currentMonth offsetMonth:1];
-    if ([delegate respondsToSelector:@selector(calendarView:switchedToMonth:targetHeight: animated:)]) [delegate calendarView:self switchedToMonth:[currentMonth month] targetHeight:self.calendarHeight animated:YES];
+//    if ([delegate respondsToSelector:@selector(calendarView:switchedToMonth:targetHeight: animated:)]) [delegate calendarView:self switchedToMonth:[currentMonth month] targetHeight:self.calendarHeight animated:YES];
+    
+    if ([delegate respondsToSelector:@selector(calendarView:switchedToMonth:withYear:targetHeight:animated:)]) [delegate calendarView:self switchedToMonth:[currentMonth month] withYear:[currentMonth year] targetHeight:self.calendarHeight animated:YES];
     prepAnimationNextMonth=NO;
     [self setNeedsDisplay];
     
@@ -108,6 +115,7 @@
     UIView *animationHolder = [[UIView alloc] initWithFrame:CGRectMake(0, kVRGCalendarViewTopBarHeight, kVRGCalendarViewWidth, targetSize-kVRGCalendarViewTopBarHeight)];
     [animationHolder setClipsToBounds:YES];
     [self addSubview:animationHolder];
+    [animationHolder release];
     
     //Animate
     self.animationView_A = [[UIImageView alloc] initWithImage:imageCurrentMonth];
@@ -158,7 +166,10 @@
     
     //Prepare next screen
     self.currentMonth = [currentMonth offsetMonth:-1];
-    if ([delegate respondsToSelector:@selector(calendarView:switchedToMonth:targetHeight:animated:)]) [delegate calendarView:self switchedToMonth:[currentMonth month] targetHeight:self.calendarHeight animated:YES];
+    
+//    if ([delegate respondsToSelector:@selector(calendarView:switchedToMonth:targetHeight:animated:)]) [delegate calendarView:self switchedToMonth:[currentMonth month] targetHeight:self.calendarHeight animated:YES];
+    
+    if ([delegate respondsToSelector:@selector(calendarView:switchedToMonth:withYear:targetHeight:animated:)]) [delegate calendarView:self switchedToMonth:[currentMonth month] withYear:[currentMonth year] targetHeight:self.calendarHeight animated:YES];
     prepAnimationPreviousMonth=NO;
     [self setNeedsDisplay];
     UIImage *imagePreviousMonth = [self drawCurrentState];
@@ -168,6 +179,7 @@
     
     [animationHolder setClipsToBounds:YES];
     [self addSubview:animationHolder];
+    [animationHolder release];
     
     self.animationView_A = [[UIImageView alloc] initWithImage:imageCurrentMonth];
     self.animationView_B = [[UIImageView alloc] initWithImage:imagePreviousMonth];
@@ -260,7 +272,10 @@
         int currentMonthIndex = [self.currentMonth month];
         int todayMonth = [[NSDate date] month];
         [self reset];
-        if ((todayMonth!=currentMonthIndex) && [delegate respondsToSelector:@selector(calendarView:switchedToMonth:targetHeight:animated:)]) [delegate calendarView:self switchedToMonth:[currentMonth month] targetHeight:self.calendarHeight animated:NO];
+        
+        //TODO:自己修改的位置
+        if ((todayMonth!=currentMonthIndex) && [delegate respondsToSelector:@selector(calendarView:switchedToMonth:withYear:targetHeight:animated:)]) [delegate calendarView:self switchedToMonth:[currentMonth month] withYear:[currentMonth year] targetHeight:self.calendarHeight animated:NO];
+        //        if ((todayMonth!=currentMonthIndex) && [delegate respondsToSelector:@selector(calendarView:switchedToMonth:targetHeight:animated:)]) [delegate calendarView:self switchedToMonth:[currentMonth month] targetHeight:self.calendarHeight animated:NO];
     }
 }
 
@@ -272,9 +287,12 @@
     NSDateFormatter *formatter = [[NSDateFormatter alloc] init];
     [formatter setDateFormat:@"MMMM yyyy"];
     labelCurrentMonth.text = [formatter stringFromDate:self.currentMonth];
-    [labelCurrentMonth sizeToFit];
+    //TODO:change
+//    [labelCurrentMonth sizeToFit];
+    [labelCurrentMonth sizeThatFits:CGSizeMake(250, 40)];
     labelCurrentMonth.frameX = roundf(self.frame.size.width/2 - labelCurrentMonth.frameWidth/2);
     labelCurrentMonth.frameY = 10;
+    [formatter release];
     [currentMonth firstWeekDayInMonth];
     
     CGContextClearRect(UIGraphicsGetCurrentContext(),rect);
@@ -319,12 +337,13 @@
     NSMutableArray *weekdays = [[NSMutableArray alloc] initWithArray:[dateFormatter shortWeekdaySymbols]];
     [weekdays moveObjectFromIndex:0 toIndex:6];
     
-    CGContextSetFillColorWithColor(context, 
+    //TODO:星期的字体颜色
+    CGContextSetFillColorWithColor(context,
                                    [UIColor colorWithHexString:@"0x383838"].CGColor);
     for (int i =0; i<[weekdays count]; i++) {
         NSString *weekdayValue = (NSString *)[weekdays objectAtIndex:i];
         UIFont *font = [UIFont fontWithName:@"HelveticaNeue" size:12];
-        [weekdayValue drawInRect:CGRectMake(i*(kVRGCalendarViewDayWidth+2), 40, kVRGCalendarViewDayWidth+2, 20) withFont:font lineBreakMode:UILineBreakModeClip alignment:UITextAlignmentCenter];
+        [weekdayValue drawInRect:CGRectMake(i*(kVRGCalendarViewDayWidth+2), 40, kVRGCalendarViewDayWidth+2, 20) withFont:font lineBreakMode:NSLineBreakByClipping alignment:NSTextAlignmentCenter];//UILineBreakModeClip
     }
     
     int numRows = [self numRows];
@@ -336,7 +355,7 @@
     CGRect rectangleGrid = CGRectMake(0,kVRGCalendarViewTopBarHeight,self.frame.size.width,gridHeight);
     CGContextAddRect(context, rectangleGrid);
     CGContextSetFillColorWithColor(context, [UIColor colorWithHexString:@"0xf3f3f3"].CGColor);
-    //CGContextSetFillColorWithColor(context, [UIColor colorWithHexString:@"0xff0000"].CGColor);
+    //CGContextSetFillColorWithColor(context, [UIColor colorWithHexString:@"0xff0000"].CGColor); //红色
     CGContextFillPath(context);
     
     //Grid white lines
@@ -357,7 +376,9 @@
     CGContextStrokePath(context);
     
     //Grid dark lines
-    CGContextSetStrokeColorWithColor(context, [UIColor colorWithHexString:@"0xcfd4d8"].CGColor);
+    //TODO:日历边框线条颜色
+    //CGContextSetStrokeColorWithColor(context, [UIColor colorWithHexString:@"0xcfd4d8"].CGColor);orangeColor
+    CGContextSetStrokeColorWithColor(context, [UIColor orangeColor].CGColor);
     CGContextBeginPath(context);
     CGContextMoveToPoint(context, 0, kVRGCalendarViewTopBarHeight);
     CGContextAddLineToPoint(context, kVRGCalendarViewWidth, kVRGCalendarViewTopBarHeight);
@@ -433,19 +454,19 @@
         // BOOL isCurrentMonth = NO;
         if (i<firstWeekDay) { //previous month
             targetDate = (prevMonthNumDays-firstWeekDay)+(i+1);
-            NSString *hex = (isSelectedDatePreviousMonth) ? @"0x383838" : @"aaaaaa";
+            NSString *hex = (isSelectedDatePreviousMonth) ? @"0x383838" : @"0x878787";    //aaaaaa
             
             CGContextSetFillColorWithColor(context, 
                                            [UIColor colorWithHexString:hex].CGColor);
         } else if (i>=(firstWeekDay+currentMonthNumDays)) { //next month
             targetDate = (i+1) - (firstWeekDay+currentMonthNumDays);
-            NSString *hex = (isSelectedDateNextMonth) ? @"0x383838" : @"aaaaaa";
+            NSString *hex = (isSelectedDateNextMonth) ? @"0x383838" : @"0x878787";      //aaaaaa
             CGContextSetFillColorWithColor(context, 
                                            [UIColor colorWithHexString:hex].CGColor);
         } else { //current month
             // isCurrentMonth = YES;
             targetDate = (i-firstWeekDay)+1;
-            NSString *hex = (isSelectedDatePreviousMonth || isSelectedDateNextMonth) ? @"0xaaaaaa" : @"0x383838";
+            NSString *hex = (isSelectedDatePreviousMonth || isSelectedDateNextMonth) ? @"0x878787" : @"0x383838";  //0xaaaaaa
             CGContextSetFillColorWithColor(context, 
                                            [UIColor colorWithHexString:hex].CGColor);
         }
@@ -453,6 +474,7 @@
         NSString *date = [NSString stringWithFormat:@"%i",targetDate];
         
         //draw selected date
+        //TODO:选中的日期
         if (selectedDate && i==selectedDateBlock) {
             CGRect rectangleGrid = CGRectMake(targetX,targetY,kVRGCalendarViewDayWidth+2,kVRGCalendarViewDayHeight+2);
             CGContextAddRect(context, rectangleGrid);
@@ -464,14 +486,16 @@
         } else if (todayBlock==i) {
             CGRect rectangleGrid = CGRectMake(targetX,targetY,kVRGCalendarViewDayWidth+2,kVRGCalendarViewDayHeight+2);
             CGContextAddRect(context, rectangleGrid);
-            CGContextSetFillColorWithColor(context, [UIColor colorWithHexString:@"0x383838"].CGColor);
+            //TODO:今天日期的颜色
+//            CGContextSetFillColorWithColor(context, [UIColor colorWithHexString:@"0x383838"].CGColor);
+            CGContextSetFillColorWithColor(context, [UIColor brownColor].CGColor);
             CGContextFillPath(context);
             
             CGContextSetFillColorWithColor(context, 
                                            [UIColor whiteColor].CGColor);
         }
         
-        [date drawInRect:CGRectMake(targetX+2, targetY+10, kVRGCalendarViewDayWidth, kVRGCalendarViewDayHeight) withFont:[UIFont fontWithName:@"HelveticaNeue-Bold" size:17] lineBreakMode:UILineBreakModeClip alignment:UITextAlignmentCenter];
+        [date drawInRect:CGRectMake(targetX+2, targetY+10, kVRGCalendarViewDayWidth, kVRGCalendarViewDayHeight) withFont:[UIFont fontWithName:@"HelveticaNeue-Bold" size:17] lineBreakMode:NSLineBreakByClipping alignment:NSTextAlignmentCenter]; //UITextAlignmentCenter  UILineBreakModeClip
     }
     
     //    CGContextClosePath(context);
@@ -541,16 +565,30 @@
         self.clipsToBounds=YES;
         
         isAnimating=NO;
-        self.labelCurrentMonth = [[UILabel alloc] initWithFrame:CGRectMake(34, 0, kVRGCalendarViewWidth-68, 40)];
+        //TODO:修改显示当前月份的titleLabel
+        self.labelCurrentMonth = [[UILabel alloc] initWithFrame:CGRectMake(34, 0, kVRGCalendarViewWidth-68, 30)];   //40->30
         [self addSubview:labelCurrentMonth];
-        labelCurrentMonth.backgroundColor=[UIColor whiteColor];
+        //TODO:change
+        labelCurrentMonth.backgroundColor=[UIColor clearColor];
         labelCurrentMonth.font = [UIFont fontWithName:@"HelveticaNeue-Bold" size:17];
         labelCurrentMonth.textColor = [UIColor colorWithHexString:@"0x383838"];
-        labelCurrentMonth.textAlignment = UITextAlignmentCenter;
+        labelCurrentMonth.textAlignment = NSTextAlignmentCenter;
         
         [self performSelector:@selector(reset) withObject:nil afterDelay:0.1]; //so delegate can be set after init and still get called on init
         //        [self reset];
     }
     return self;
+}
+
+-(void)dealloc {
+    
+    self.delegate=nil;
+    self.currentMonth=nil;
+    self.labelCurrentMonth=nil;
+    
+    self.markedDates=nil;
+    self.markedColors=nil;
+    
+    [super dealloc];
 }
 @end

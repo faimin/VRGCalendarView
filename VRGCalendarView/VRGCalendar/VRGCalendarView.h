@@ -18,7 +18,7 @@
 
 @protocol VRGCalendarViewDelegate;
 @interface VRGCalendarView : UIView {
-    __weak id <VRGCalendarViewDelegate> delegate;
+    id <VRGCalendarViewDelegate> delegate;
     
     NSDate *currentMonth;
     
@@ -35,7 +35,7 @@
     NSArray *markedColors;
 }
 
-@property (nonatomic, weak) id <VRGCalendarViewDelegate> delegate;
+@property (nonatomic, assign) id <VRGCalendarViewDelegate> delegate;
 @property (nonatomic, retain) NSDate *currentMonth;
 @property (nonatomic, retain) UILabel *labelCurrentMonth;
 @property (nonatomic, retain) UIImageView *animationView_A;
@@ -45,8 +45,8 @@
 @property (nonatomic, getter = calendarHeight) float calendarHeight;
 @property (nonatomic, retain, getter = selectedDate) NSDate *selectedDate;
 
--(void)selectDate:(int)date;
--(void)reset;
+-(void)selectDate:(int)date;        //选择日期 
+-(void)reset;                       //回到今天
 
 -(void)markDates:(NSArray *)dates;
 -(void)markDates:(NSArray *)dates withColors:(NSArray *)colors;
@@ -61,6 +61,8 @@
 @end
 
 @protocol VRGCalendarViewDelegate <NSObject>
--(void)calendarView:(VRGCalendarView *)calendarView switchedToMonth:(int)month targetHeight:(float)targetHeight animated:(BOOL)animated;
+///切换月份时调用
+-(void)calendarView:(VRGCalendarView *)calendarView switchedToMonth:(int)month withYear:(int)year targetHeight:(float)targetHeight animated:(BOOL)animated;
+///选择日期时调用
 -(void)calendarView:(VRGCalendarView *)calendarView dateSelected:(NSDate *)date;
 @end
