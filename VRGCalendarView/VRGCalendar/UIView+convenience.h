@@ -22,7 +22,7 @@
 @property (nonatomic) CGFloat frameWidth;
 @property (nonatomic) CGFloat frameHeight;
 
--(BOOL) containsSubView:(UIView *)subView;
--(BOOL) containsSubViewOfClassType:(Class)class;
+- (BOOL)containsSubView:(UIView *)subView;
+- (BOOL)containsSubViewOfClassType:(Class)class;
 
 @end

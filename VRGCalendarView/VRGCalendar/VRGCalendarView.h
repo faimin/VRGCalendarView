@@ -18,51 +18,39 @@
 
 @protocol VRGCalendarViewDelegate;
 @interface VRGCalendarView : UIView {
-    id <VRGCalendarViewDelegate> delegate;
-    
-    NSDate *currentMonth;
-    
-    UILabel *labelCurrentMonth;
-    
-    BOOL isAnimating;
-    BOOL prepAnimationPreviousMonth;
-    BOOL prepAnimationNextMonth;
-    
-    UIImageView *animationView_A;
-    UIImageView *animationView_B;
-    
-    NSArray *markedDates;
-    NSArray *markedColors;
+    BOOL _isAnimating;
+    BOOL _prepAnimationPreviousMonth;
+    BOOL _prepAnimationNextMonth;
 }
 
-@property (nonatomic, assign) id <VRGCalendarViewDelegate> delegate;
-@property (nonatomic, retain) NSDate *currentMonth;
-@property (nonatomic, retain) UILabel *labelCurrentMonth;
-@property (nonatomic, retain) UIImageView *animationView_A;
-@property (nonatomic, retain) UIImageView *animationView_B;
-@property (nonatomic, retain) NSArray *markedDates;
-@property (nonatomic, retain) NSArray *markedColors;
+@property (nonatomic, weak) id <VRGCalendarViewDelegate> delegate;
+@property (nonatomic, strong) NSDate *currentMonth;
+@property (nonatomic, strong) UILabel *labelCurrentMonth;
+@property (nonatomic, strong) UIImageView *animationView_A;
+@property (nonatomic, strong) UIImageView *animationView_B;
+@property (nonatomic, strong) NSArray *markedDates;
+@property (nonatomic, strong) NSArray *markedColors;
 @property (nonatomic, getter = calendarHeight) float calendarHeight;
-@property (nonatomic, retain, getter = selectedDate) NSDate *selectedDate;
+@property (nonatomic, strong, getter = selectedDate) NSDate *selectedDate;
 
--(void)selectDate:(int)date;        //选择日期 
--(void)reset;                       //回到今天
+- (void)selectDate:(NSInteger)date;        //选择日期
+- (void)reset;                       //回到今天
 
--(void)markDates:(NSArray *)dates;
--(void)markDates:(NSArray *)dates withColors:(NSArray *)colors;
+- (void)markDates:(NSArray *)dates;
+- (void)markDates:(NSArray *)dates withColors:(NSArray *)colors;
 
--(void)showNextMonth;
--(void)showPreviousMonth;
+- (void)showNextMonth;
+- (void)showPreviousMonth;
 
--(int)numRows;
--(void)updateSize;
--(UIImage *)drawCurrentState;
+- (NSInteger)numRows;
+- (void)updateSize;
+- (UIImage *)drawCurrentState;
 
 @end
 
 @protocol VRGCalendarViewDelegate <NSObject>
-///切换月份时调用
--(void)calendarView:(VRGCalendarView *)calendarView switchedToMonth:(int)month withYear:(int)year targetHeight:(float)targetHeight animated:(BOOL)animated;
-///选择日期时调用
--(void)calendarView:(VRGCalendarView *)calendarView dateSelected:(NSDate *)date;
+/// 切换月份时调用
+- (void)calendarView:(VRGCalendarView *)calendarView switchedToMonth:(NSInteger)month withYear:(NSInteger)year targetHeight:(float)targetHeight animated:(BOOL)animated;
+/// 选择日期时调用
+- (void)calendarView:(VRGCalendarView *)calendarView dateSelected:(NSDate *)date;
 @end

@@ -9,7 +9,7 @@
 
 @implementation UIView (convenience)
 
--(BOOL) containsSubView:(UIView *)subView
+- (BOOL)containsSubView:(UIView *)subView
 {
     for (UIView *view in [self subviews]) {
         if ([view isEqual:subView]) {
@@ -19,7 +19,7 @@
     return NO;
 }
 
--(BOOL) containsSubViewOfClassType:(Class)class {
+- (BOOL)containsSubViewOfClassType:(Class)class {
     for (UIView *view in [self subviews]) {
         if ([view isMemberOfClass:class]) {
             return YES;

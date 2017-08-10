@@ -9,17 +9,17 @@
 
 @interface NSDate (Convenience)
 
--(NSDate *)offsetMonth:(int)numMonths;
--(NSDate *)offsetDay:(int)numDays;
--(NSDate *)offsetHours:(int)hours;
--(int)numDaysInMonth;
--(int)firstWeekDayInMonth;
--(int)year;
--(int)month;
--(int)day;
+- (NSDate *)offsetMonth:(int)numMonths;
+- (NSDate *)offsetDay:(int)numDays;
+- (NSDate *)offsetHours:(int)hours;
+- (NSUInteger)numDaysInMonth;
+- (NSInteger)firstWeekDayInMonth;
+- (NSInteger)year;
+- (NSInteger)month;
+- (NSInteger)day;
 
-+(NSDate *)dateStartOfDay:(NSDate *)date;
-+(NSDate *)dateStartOfWeek;
-+(NSDate *)dateEndOfWeek;
++ (NSDate *)dateStartOfDay:(NSDate *)date;
++ (NSDate *)dateStartOfWeek;
++ (NSDate *)dateEndOfWeek;
 
 @end

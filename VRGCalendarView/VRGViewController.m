@@ -8,9 +8,9 @@
 
 #import "VRGViewController.h"
 #import "NSDate+convenience.h"
+#import "VRGCalendarView.h"
 
-
-@interface VRGViewController ()
+@interface VRGViewController () <VRGCalendarViewDelegate>
 
 @end
 
@@ -22,35 +22,28 @@
 	// Do any additional setup after loading the view, typically from a nib.
     
     VRGCalendarView *calendar = [[VRGCalendarView alloc] init];
-    calendar.delegate=self;
+    calendar.delegate = self;
     [self.view addSubview:calendar];
-    
-    
-    
 }
 
--(void)calendarView:(VRGCalendarView *)calendarView switchedToMonth:(int)month targetHeight:(float)targetHeight animated:(BOOL)animated {
-    if (month==[[NSDate date] month]) {
+#pragma mark - VRGCalendarViewDelegate
+
+- (void)calendarView:(VRGCalendarView *)calendarView switchedToMonth:(NSInteger)month withYear:(NSInteger)year targetHeight:(float)targetHeight animated:(BOOL)animated {
+    if (month == [[NSDate date] month]) {
         NSArray *dates = [NSArray arrayWithObjects:[NSNumber numberWithInt:1],[NSNumber numberWithInt:5], nil];
         [calendarView markDates:dates];
     }
+
 }
 
 -(void)calendarView:(VRGCalendarView *)calendarView dateSelected:(NSDate *)date {
-    NSLog(@"Selected date = %@",date);
+    NSLog(@"Selected date = %@", date);
 }
 
-
-
-- (void)viewDidUnload
-{
-    [super viewDidUnload];
-    // Release any retained subviews of the main view.
-}
-
-- (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation
-{
+- (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation {
     return (interfaceOrientation != UIInterfaceOrientationPortraitUpsideDown);
 }
+
+
 
 @end
