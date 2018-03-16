@@ -24,14 +24,14 @@ calendar.delegate=self;
 Whenever a user selects a date, the following method will be called:
 
 ```objc
--(void)calendarView:(VRGCalendarView *)calendarView dateSelected:(NSDate *)date;
+- (void)calendarView:(VRGCalendarView *)calendarView dateSelected:(NSDate *)date;
 ```
 
 ##### Switching months
 This delegate method will be called whenever a user switches to the next or previous month.  
 
 ```objc
--(void)calendarView:(VRGCalendarView *)calendarView switchedToMonth:(int)month targetHeight:(float)targetHeight animated:(BOOL)animated;
+- (void)calendarView:(VRGCalendarView *)calendarView switchedToMonth:(int)month targetHeight:(float)targetHeight animated:(BOOL)animated;
 ```
 
 With the way the calendar layouts work, the number of rows (and thus the height) can vary. You can react to this change by using the targetHeight parameter.
@@ -43,7 +43,7 @@ NSArray *dates = [NSArray arrayWithObjects:[NSNumber numberWithInt:1], [NSNumber
 [calendarView markDates:dates];
 ```
 
-Or 
+OR 
 
 ```objc
 NSArray *date = [NSArray arrayWithObjects:[NSDate date], nil];
@@ -51,7 +51,7 @@ NSArray *color = [NSArray arrayWithObjects:[UIColor redColor],nil];
 [calendarView markDates:date withColors:color];
 ```
 
-
-
+## License Vurig Calendar is released under the MIT License
+[http://opensource.org/licenses/MIT](http://opensource.org/licenses/MIT)
 
 	
